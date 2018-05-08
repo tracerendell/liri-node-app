@@ -54,6 +54,31 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 }
 });
 
+var movieThis = function(requestInput) {
+    if (requestInput === "") {
+        requestInput = "Mr. Nobody"
+    }
+
+        var queryUrl = "http://www.omdbapi.com/?t=" + requestInput + "&y=&plot=short&apikey=trilogy";
+
+        request(queryUrl, function(error, response, body) {
+            if(!error && res.statusCode === 200) {
+                console.log(
+                    `   
+                    Title:                  ${JSON.parse(body).Title}
+                    Release Year:           ${JSON.parse(body).Year}
+                    Rotten Tomatoes Rating: ${JSON.parse(body).Ratings[1].Value}
+                    IMDB Rating:            ${JSON.parse(body).imdbRating}
+                    Country:                ${JSON.parse(body).Country}
+                    Language:               ${JSON.parse(body).Language}
+                    Plot:                   ${JSON.parse(body).Plot}
+                    Actors:                 ${JSON.parse(body).Actors} `);
+            }
+        });
+    }
+
+
+
 }
 
 switch (requestType) {
@@ -63,6 +88,10 @@ switch (requestType) {
 
     case 'my-tweets':
         myTweets();
+        break;
+
+    case 'movie-this':
+        movieThis();
         break;
 
     default:
